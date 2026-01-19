@@ -6,5 +6,10 @@ public class Starter : MonoBehaviour
     {
         Debug.Log("[Starter] <Start>");
         ResumableDownloaderDemo.RunDownloadManager().Forget();
+        TsvReaderDemo.ReadTempConfigFile();
+        TsvKeyValueTableDemo.AppInfoDemo();
+        TsvKeyValueTableDemo.AppInfoDemo();
+        TsvKeyValueTableDemo.SampleKeyValueTableDemo();
+        TsvKeyValueTableDemo.TempConfigDemo();
     }
 }
