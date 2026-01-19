@@ -14,6 +14,8 @@ namespace Utils.FileReader
     {
         // 单例实例
         private static T s_Instance;
+        // 线程安全锁
+        private static readonly object s_Lock = new object();
 
         /// <summary>
         /// 获取单例实例
@@ -22,10 +24,19 @@ namespace Utils.FileReader
         {
             get
             {
+                // 第一次检查，避免不必要的锁定
                 if (s_Instance == null)
                 {
-                    s_Instance = new T();
-                    s_Instance.LoadFromFile();
+                    // 添加线程安全锁，确保只创建一个实例
+                    lock (s_Lock)
+                    {
+                        // 第二次检查，确保在锁定期间没有其他线程创建实例
+                        if (s_Instance == null)
+                        {
+                            s_Instance = new T();
+                            s_Instance.LoadFromFile();
+                        }
+                    }
                 }
                 return s_Instance;
             }
